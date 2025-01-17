@@ -1,10 +1,11 @@
 import { NavLink, Link } from "react-router-dom";
 import style from "./header.module.scss";
 import { useMediaQuery } from "react-responsive";
+import {useMenuStore} from "../../../store/menu";
 
 export default function HeaderMenu() {
   const isDesktop = useMediaQuery({ query: "(min-width: 530px)" });
-
+  const menuData = useMenuStore((state) => state.menuData);
   return (
     <menu>
       <nav>
@@ -15,28 +16,28 @@ export default function HeaderMenu() {
                 className={({ isActive }) =>
                   isActive ? style.menuLinkActive : style.menuLink
                 }
-                to="/"
+                to={menuData[0].path}
               >
-                Home
+                {menuData[0].name}
               </NavLink>
             </li>
             <li>
-              <NavLink className={style.menuLink} to="/about">
-                About
+              <NavLink className={style.menuLink} to={menuData[1].path}>
+                {menuData[1].name}
               </NavLink>
             </li>
             <li>
-              <Link to="/#">
+              <Link to={menuData[2].path}>
                 <img
                   className={style.menuSearchBtn}
-                  src="/public/header/search.svg"
+                  src="/header/search.svg"
                   alt="search_icon"
                 />
               </Link>
             </li>
             <li>
-              <Link className={style.menuContactBtn} to="/#">
-                Contact Us
+              <Link className={style.menuContactBtn} to={menuData[3].path}>
+                {menuData[3].name}
               </Link>
             </li>
           </ul>
